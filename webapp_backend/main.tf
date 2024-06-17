@@ -1,10 +1,10 @@
 resource "azurerm_resource_group" "this" {
-  name     = "rg-${var.project_name}-${var.location_short}-${var.stage}-001"
+  name     = "rg-${var.project_name}-${var.stage}-${var.location_short}-001"
   location = var.location
 }
 
 resource "azurerm_virtual_network" "this" {
-  name                = "vnet-${var.project_name}-${var.location_short}-${var.stage}-001"
+  name                = "vnet-${var.project_name}-${var.stage}-${var.location_short}-001"
   location            = var.location
   resource_group_name = azurerm_resource_group.this.name
   address_space       = ["10.0.0.0/16"]
@@ -23,7 +23,7 @@ resource "azurerm_virtual_network" "this" {
 
 resource "azurerm_storage_account" "this" {
   count                    = var.create_storage_account ? 1 : 0
-  name                     = "sa${var.project_name}${var.location_short}${var.stage}001"
+  name                     = "sa${var.project_name}${var.stage}${var.location_short}001"
   resource_group_name      = azurerm_resource_group.this.name
   location                 = var.location
   account_tier             = "Standard"
@@ -32,7 +32,7 @@ resource "azurerm_storage_account" "this" {
 
 resource "azurerm_redis_cache" "this" {
   count               = var.create_redis_cache ? 1 : 0
-  name                = "rc-${var.project_name}-${var.location_short}-${var.stage}-001"
+  name                = "rc-${var.project_name}-${var.stage}-${var.location_short}001"
   location            = var.location
   resource_group_name = azurerm_resource_group.this.name
   capacity            = 2
